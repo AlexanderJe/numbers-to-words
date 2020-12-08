@@ -1,17 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+const writtenNumber = require('written-number');
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+export function convertNumberToEnglishText(number) {
+  let isNegative = false
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  number = number.toString();
+
+  if (number.includes('-')) {
+    isNegative = true;
+    number = number.replace(/\-/g, '')
+  }
+
+  number = parseFloat(number)
+
+  number = writtenNumber(number);
+
+  number = isNegative ? "negative " + number : number;
+  number = number.replace(/\-/g, ' ')
+  number = number.replace(/\sand/, '')
+
+  return number;
+}
